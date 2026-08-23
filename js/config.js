@@ -13,5 +13,5 @@
 
 window.DEEPTRACE_CONFIG = {
   API_BASE_URL : 'https://deeptrace-backend-5nsv.onrender.com',
-  TIMEOUT_MS   : 120000   /* 2 minutes — videos take longer, plus Render free-tier cold start */
+  TIMEOUT_MS   : 180000   /* 3 minutes — Render free-tier CPU is slow, plus cold start */
 };
