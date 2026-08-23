@@ -1,0 +1,288 @@
+/* ================================================================
+   DeepTrace — upload.css
+   Styles specific to the upload zone states, drag-over,
+   error shake, loading scan line overlay, and the BTD
+   idle animation that runs before any file is uploaded.
+   ================================================================ */
+
+
+/* ================================================================
+   BTD IDLE ANIMATION — Face scan in right panel before upload
+   ================================================================ */
+
+/* Face outline — draws in on load */
+.btd-face-outline {
+  fill           : none;
+  stroke         : var(--accent);
+  stroke-width   : 1.2;
+  opacity        : 0.75;
+  stroke-dasharray : 300;
+  stroke-dashoffset: 300;
+  animation      : drawFace 2s ease forwards,
+                   facePulse 4s ease-in-out 2s infinite;
+}
+
+/* Hairline — dashed, draws in after face */
+.btd-hairline {
+  fill    : none;
+  stroke  : var(--accent);
+  stroke-width: 1;
+  opacity : 0.55;
+  stroke-dasharray : 80;
+  stroke-dashoffset: 80;
+  animation: drawHairline 1.2s ease 1.8s forwards;
+}
+
+/* Jaw arc — solid, thicker — strongest BTD signal */
+.btd-jaw {
+  fill        : none;
+  stroke      : var(--accent);
+  stroke-width: 2;
+  opacity     : 0;
+  animation   : fadeInStroke 0.6s ease 2.8s forwards,
+                jawPulse 3s ease-in-out 3.5s infinite;
+}
+
+/* Ears */
+.btd-ear {
+  fill        : none;
+  stroke      : var(--accent);
+  stroke-width: 0.9;
+  opacity     : 0;
+  animation   : fadeInStroke 0.5s ease 3s forwards;
+}
+
+/* Eyebrows */
+.btd-eyebrow {
+  fill            : none;
+  stroke          : var(--accent);
+  stroke-width    : 1.2;
+  stroke-linecap  : round;
+  opacity         : 0;
+  animation       : fadeInStroke 0.5s ease 3.2s forwards;
+}
+
+/* Eye lids */
+.btd-eye-lid {
+  fill        : none;
+  stroke      : var(--accent);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  opacity     : 0;
+  animation   : fadeInStroke 0.5s ease 3.3s forwards;
+}
+.btd-eye-lower {
+  opacity        : 0;
+  animation      : fadeInStroke 0.5s ease 3.4s forwards;
+  stroke-width   : 0.8 !important;
+}
+
+/* Iris circles */
+.btd-iris {
+  fill        : none;
+  stroke      : var(--accent);
+  stroke-width: 1;
+  opacity     : 0;
+  animation   : fadeInStroke 0.4s ease 3.5s forwards;
+}
+
+/* Pupil dots */
+.btd-pupil {
+  fill    : var(--accent);
+  opacity : 0;
+  animation: fadeInStroke 0.4s ease 3.6s forwards,
+             eyeBlink 5s ease-in-out 5s infinite;
+}
+
+/* BTD boundary detection dots — pulse one by one */
+.btd-dot {
+  fill   : var(--accent);
+  opacity: 0;
+}
+.btd-dot-1 { animation: dotPop 0.4s ease 3s   forwards, dotPulse 2.5s ease-in-out 3.4s infinite; }
+.btd-dot-2 { animation: dotPop 0.4s ease 3.2s forwards, dotPulse 2.5s ease-in-out 3.6s infinite; }
+.btd-dot-3 { animation: dotPop 0.4s ease 3.4s forwards, dotPulse 2.5s ease-in-out 3.8s infinite; }
+.btd-dot-4 { animation: dotPop 0.4s ease 3.6s forwards, dotPulse 2.5s ease-in-out 4s   infinite; }
+.btd-dot-5 { animation: dotPop 0.4s ease 3.8s forwards, dotPulse 2.5s ease-in-out 4.2s infinite; }
+.btd-dot-6 { animation: dotPop 0.4s ease 4s   forwards, dotPulse 2.5s ease-in-out 4.4s infinite; }
+
+/* Scan line — sweeps top to bottom continuously */
+.btd-scanline {
+  stroke      : var(--accent);
+  stroke-width: 1.5;
+  opacity     : 0;
+  filter      : drop-shadow(0 0 4px var(--accent));
+  animation   : btdScan 2.5s ease-in-out 2s infinite;
+}
+
+/* Mini face elements for pipeline card */
+.mini-face    { stroke: var(--accent); stroke-width: 1; fill: none; opacity: 0.7; }
+.mini-hairline{ stroke: var(--accent); stroke-width: 0.8; fill: none; opacity: 0.5; animation: drawHairline 2s ease infinite; }
+.mini-jaw     { stroke: var(--accent); stroke-width: 1.5; fill: none; animation: jawPulse 3s ease-in-out infinite; }
+.mini-dot     { fill: var(--accent); animation: dotPulse 2s ease-in-out infinite; }
+
+/* Mini chart line for pipeline card */
+.mini-chart-line { animation: chartDraw 3s ease-in-out infinite; }
+
+
+/* ================================================================
+   DROP ZONE — hover and drag states (extends components.css)
+   ================================================================ */
+
+/* Extra inner glow always present — subtle */
+.drop-zone::before {
+  content      : '';
+  position     : absolute;
+  inset        : 0;
+  border-radius: var(--radius-md);
+  background   : radial-gradient(
+    ellipse at center,
+    rgba(0,212,255,0.03) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Drag over — more intense */
+.drop-zone.drag-over {
+  transform: scale(1.01);
+}
+
+/* Error state */
+.drop-zone.error {
+  border-color: var(--color-fake) !important;
+  background  : var(--color-fake-bg) !important;
+  box-shadow  : 0 0 0 3px var(--color-fake-glow) !important;
+}
+
+/* Loading state — disables interaction */
+.drop-zone.loading {
+  cursor        : default;
+  pointer-events: none;
+}
+
+
+/* ================================================================
+   SCAN LINE LOADER — during analysis (State B)
+   Extra styles beyond what components.css provides
+   ================================================================ */
+
+/* Glow effect extends beyond the line */
+.scanner-line::after {
+  content   : '';
+  position  : absolute;
+  top       : -4px;
+  left      : 0;
+  right     : 0;
+  height    : 10px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0,212,255,0.15) 30%,
+    rgba(0,212,255,0.3) 50%,
+    rgba(0,212,255,0.15) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+
+/* ================================================================
+   UPLOAD ERROR MESSAGE
+   ================================================================ */
+.upload-error-wrap {
+  animation: fadeInUp 0.25s ease;
+}
+
+
+/* ================================================================
+   BTD IDLE KEYFRAMES
+   ================================================================ */
+
+/* Face outline draws itself */
+@keyframes drawFace {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Hairline draws itself */
+@keyframes drawHairline {
+  to { stroke-dashoffset: 0; opacity: 0.55; }
+}
+
+/* Fade in for elements that appear after drawing */
+@keyframes fadeInStroke {
+  to { opacity: 1; }
+}
+
+/* Jaw pulses — the most important BTD signal */
+@keyframes jawPulse {
+  0%, 100% { opacity: 1;   stroke-width: 2; }
+  50%       { opacity: 0.5; stroke-width: 1.2; }
+}
+
+/* Face outline breathes */
+@keyframes facePulse {
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 0.4;  }
+}
+
+/* Boundary dots pop in */
+@keyframes dotPop {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { opacity: 1; transform: scale(1.4); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Boundary dots pulse continuously */
+@keyframes dotPulse {
+  0%, 100% { opacity: 1;   r: 3; }
+  50%       { opacity: 0.3; r: 2; }
+}
+
+/* Scan line sweeps top to bottom */
+@keyframes btdScan {
+  0%   { transform: translateY(-100px); opacity: 0;   }
+  10%  { opacity: 0.9; }
+  90%  { opacity: 0.9; }
+  100% { transform: translateY(120px);  opacity: 0;   }
+}
+
+/* Eye blink */
+@keyframes eyeBlink {
+  0%, 96%, 100% { transform: scaleY(1); }
+  98%            { transform: scaleY(0.1); }
+}
+
+/* Chart draw animation */
+@keyframes chartDraw {
+  0%   { stroke-dashoffset: 200; opacity: 0.4; }
+  50%  { stroke-dashoffset: 0;   opacity: 1; }
+  100% { stroke-dashoffset: 200; opacity: 0.4; }
+}
+
+/* Heatmap reveal animation for pipeline card */
+@keyframes heatmapReveal {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1;   }
+}
+
+/* Scan sweep for scanner mode */
+@keyframes scanSweep {
+  0%   { top: -2px; }
+  100% { top: 100%; }
+}
+
+/* Error shake */
+@keyframes errorShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-5px); }
+  40%      { transform: translateX(5px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(3px); }
+}
+
+/* Fade in up — for error messages */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

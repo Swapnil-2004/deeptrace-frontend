@@ -1,0 +1,142 @@
+/* ================================================================
+   DeepTrace — animations.css
+   All remaining keyframes not already defined in upload.css
+   or result.css. This file completes the animation system.
+   ================================================================ */
+
+
+/* ================================================================
+   SECTION REVEAL — elements fade in as user scrolls
+   ================================================================ */
+.reveal {
+  opacity          : 0;
+  transform        : translateY(20px);
+  transition       : opacity var(--t-slow), transform var(--t-slow);
+  transition-delay : var(--reveal-delay, 0ms);
+}
+.reveal.visible {
+  opacity  : 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for child elements */
+.reveal-child:nth-child(1) { --reveal-delay: 0ms; }
+.reveal-child:nth-child(2) { --reveal-delay: 80ms; }
+.reveal-child:nth-child(3) { --reveal-delay: 160ms; }
+.reveal-child:nth-child(4) { --reveal-delay: 240ms; }
+
+
+/* ================================================================
+   NAVBAR — scrolled state
+   ================================================================ */
+.navbar.scrolled {
+  border-bottom-color: var(--bg-border-bright);
+  background         : rgba(10,10,15,0.96);
+}
+
+
+/* ================================================================
+   HOW-STEP hover lift — already in layout but keyframe here
+   ================================================================ */
+@keyframes cardLift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-4px); }
+}
+
+
+/* ================================================================
+   TRUST BAR — subtle scroll animation on load
+   ================================================================ */
+.trust-bar {
+  animation: trustBarFade 0.8s ease 0.3s both;
+}
+@keyframes trustBarFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ================================================================
+   PIPELINE DIAGRAM — steps animate in sequence on scroll
+   ================================================================ */
+.pipeline-step { transition-delay: calc(var(--step-index, 0) * 120ms); }
+.pipeline-step[data-step="1"] { --step-index: 0; }
+.pipeline-step[data-step="2"] { --step-index: 1; }
+.pipeline-step[data-step="3"] { --step-index: 2; }
+.pipeline-step[data-step="4"] { --step-index: 3; }
+.pipeline-step[data-step="5"] { --step-index: 4; }
+.pipeline-step[data-step="6"] { --step-index: 5; }
+
+.pipeline-arrow { transition-delay: calc(var(--arrow-index, 0) * 120ms + 60ms); }
+.pipeline-arrow:nth-child(2)  { --arrow-index: 0; }
+.pipeline-arrow:nth-child(4)  { --arrow-index: 1; }
+.pipeline-arrow:nth-child(6)  { --arrow-index: 2; }
+.pipeline-arrow:nth-child(8)  { --arrow-index: 3; }
+.pipeline-arrow:nth-child(10) { --arrow-index: 4; }
+
+
+/* ================================================================
+   MOBILE NAV — hamburger animation
+   ================================================================ */
+.nav-mobile-btn.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.nav-mobile-btn.open span:nth-child(2) {
+  opacity  : 0;
+  transform: scaleX(0);
+}
+.nav-mobile-btn.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+.nav-mobile-btn span {
+  transition: all var(--t-base);
+}
+
+
+/* ================================================================
+   TOOL PANEL — state transitions
+   Smooth fade between idle / scanner / result states
+   ================================================================ */
+.tool-panel {
+  animation: panelFadeIn 0.4s ease both;
+}
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ================================================================
+   SOUND TOGGLE — active pulse
+   ================================================================ */
+.sound-toggle[aria-pressed="true"] {
+  animation: soundPulse 1.5s ease-in-out infinite;
+}
+@keyframes soundPulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50%       { box-shadow: 0 0 0 4px transparent; }
+}
+
+
+/* ================================================================
+   DEVELOPER CARD — border glow on hover
+   ================================================================ */
+@keyframes devCardGlow {
+  from { box-shadow: none; }
+  to   { box-shadow: 0 0 24px var(--accent-glow-sm); }
+}
+
+
+/* ================================================================
+   LOADING DOTS — for scanner status text
+   ================================================================ */
+.loading-dots::after {
+  content  : '';
+  animation: loadingDots 1.2s steps(4, end) infinite;
+}
+@keyframes loadingDots {
+  0%  { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}

@@ -1,0 +1,93 @@
+/* ================================================================
+   DeepTrace — variables.css
+   The single source of truth for every color, font, spacing
+   and transition value used across the entire website.
+   Change one value here — it updates everywhere automatically.
+   ================================================================ */
+
+:root {
+
+  /* ── Colors ─────────────────────────────────────────────────── */
+
+  /* Backgrounds */
+  --bg-primary       : #0a0a0f;   /* main page background          */
+  --bg-card          : #11111a;   /* card / panel background       */
+  --bg-card-hover    : #15151f;   /* card hover state              */
+  --bg-border        : #1e1e2e;   /* subtle borders                */
+  --bg-border-bright : #2a2a3e;   /* brighter border on hover      */
+
+  /* Accent — electric cyan */
+  --accent           : #00d4ff;
+  --accent-dim       : #00aacc;
+  --accent-glow      : rgba(0, 212, 255, 0.18);
+  --accent-glow-sm   : rgba(0, 212, 255, 0.07);
+  --accent-glow-xs   : rgba(0, 212, 255, 0.04);
+
+  /* Verdict colors */
+  --color-fake       : #ff4444;
+  --color-fake-dim   : #cc2222;
+  --color-fake-bg    : rgba(255, 68,  68,  0.08);
+  --color-fake-border: rgba(255, 68,  68,  0.28);
+  --color-fake-glow  : rgba(255, 68,  68,  0.15);
+
+  --color-real       : #00ff88;
+  --color-real-dim   : #00cc66;
+  --color-real-bg    : rgba(0,   255, 136, 0.07);
+  --color-real-border: rgba(0,   255, 136, 0.25);
+  --color-real-glow  : rgba(0,   255, 136, 0.12);
+
+  /* Text */
+  --text-heading     : #ffffff;
+  --text-primary     : #e0e0e8;
+  --text-muted       : #888899;
+  --text-faint       : #3a3a55;
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-heading     : 'Syne',          sans-serif;
+  --font-body        : 'DM Sans',       sans-serif;
+  --font-mono        : 'JetBrains Mono',monospace;
+
+  /* ── Spacing — always multiples of 8px ──────────────────────── */
+  --sp-1  :  4px;
+  --sp-2  :  8px;
+  --sp-3  : 12px;
+  --sp-4  : 16px;
+  --sp-5  : 24px;
+  --sp-6  : 32px;
+  --sp-7  : 48px;
+  --sp-8  : 64px;
+  --sp-9  : 96px;
+
+  /* ── Border radius ───────────────────────────────────────────── */
+  --radius-sm   :  6px;
+  --radius-md   : 12px;
+  --radius-lg   : 20px;
+  --radius-xl   : 28px;
+  --radius-full : 9999px;
+
+  /* ── Transitions ─────────────────────────────────────────────── */
+  --t-fast   : 150ms ease;
+  --t-base   : 250ms ease;
+  --t-slow   : 400ms ease;
+  --t-slower : 600ms ease;
+
+  /* ── Shadows ─────────────────────────────────────────────────── */
+  --shadow-sm     : 0 2px  8px  rgba(0,0,0,0.4);
+  --shadow-md     : 0 4px  24px rgba(0,0,0,0.5);
+  --shadow-lg     : 0 8px  48px rgba(0,0,0,0.6);
+  --shadow-accent : 0 0   24px  var(--accent-glow);
+  --shadow-fake   : 0 0   32px  var(--color-fake-glow);
+  --shadow-real   : 0 0   32px  var(--color-real-glow);
+
+  /* ── Layout ──────────────────────────────────────────────────── */
+  --container-max  : 1120px;
+  --navbar-height  :   64px;
+  --hero-right-w   :  480px;  /* right panel max width           */
+
+  /* ── Z-index layers ──────────────────────────────────────────── */
+  --z-base    :   1;
+  --z-card    :  10;
+  --z-overlay :  50;
+  --z-navbar  : 100;
+  --z-toast   : 200;
+}

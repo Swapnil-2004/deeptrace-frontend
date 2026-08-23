@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DeepTrace — Advanced AI & Deepfake Detection using Boundary-Topology Analysis. Detect AI-generated images and deepfake videos instantly." />
+  <title>DeepTrace — See Through the Fake</title>
+
+  <!-- Google Fonts — Syne for headings, DM Sans for body, JetBrains Mono for data -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- CSS — loaded in order, each file has one job -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/upload.css" />
+  <link rel="stylesheet" href="css/result.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVBAR — fixed top, always visible
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo" aria-label="DeepTrace home">
+        <svg class="nav-logo-svg" width="36" height="36"
+             viewBox="-110 -110 220 220" fill="none"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="0" cy="0" r="80" fill="#05090c" stroke="var(--accent)" stroke-width="3.2"/>
+          <circle cx="0" cy="0" r="75" fill="none" stroke="var(--accent)" stroke-width="0.4" opacity="0.18"/>
+          <path d="M0 -52 C10 -52 22 -48 30 -38 C38 -28 40 -14 40 0 C40 14 38 26 32 36 C26 46 16 54 8 58 C4 60 0 61 0 61 C0 61 -4 60 -8 58 C-16 54 -26 46 -32 36 C-38 26 -40 14 -40 0 C-40 -14 -38 -28 -30 -38 C-22 -48 -10 -52 0 -52 Z" fill="none" stroke="var(--accent)" stroke-width="1.1" opacity="0.85"/>
+          <path d="M-30 -40 C-22 -68 -10 -76 0 -76 C10 -76 22 -68 30 -40" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 2" opacity="0.65"/>
+          <path d="M-20 42 C-10 56 -4 62 0 63 C4 62 10 56 20 42" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.95"/>
+          <path d="M-26 -24 C-20 -29 -12 -30 -6 -27" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+          <path d="M26 -24 C20 -29 12 -30 6 -27" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+          <path d="M-26 -15 C-22 -21 -14 -22 -8 -21 C-4 -20 -2 -17 -2 -15" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M-26 -15 C-22 -11 -14 -10 -8 -10 C-4 -10 -2 -12 -2 -15" fill="none" stroke="var(--accent)" stroke-width="0.8" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="-14" cy="-15" r="4" fill="none" stroke="var(--accent)" stroke-width="1"/>
+          <circle cx="-14" cy="-15" r="1.8" fill="var(--accent)" opacity="0.95"/>
+          <circle cx="-12" cy="-17" r="0.7" fill="white" opacity="0.8"/>
+          <path d="M26 -15 C22 -21 14 -22 8 -21 C4 -20 2 -17 2 -15" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M26 -15 C22 -11 14 -10 8 -10 C4 -10 2 -12 2 -15" fill="none" stroke="var(--accent)" stroke-width="0.8" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="14" cy="-15" r="4" fill="none" stroke="var(--accent)" stroke-width="1"/>
+          <circle cx="14" cy="-15" r="1.8" fill="var(--accent)" opacity="0.95"/>
+          <circle cx="16" cy="-17" r="0.7" fill="white" opacity="0.8"/>
+          <path d="M-40 -6 C-46 -6 -49 0 -49 6 C-49 12 -46 18 -40 18" fill="none" stroke="var(--accent)" stroke-width="0.9" opacity="0.45"/>
+          <path d="M40 -6 C46 -6 49 0 49 6 C49 12 46 18 40 18" fill="none" stroke="var(--accent)" stroke-width="0.9" opacity="0.45"/>
+          <line x1="-40" y1="-2" x2="40" y2="-2" stroke="var(--accent)" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="0" cy="-76" r="2.2" fill="var(--accent)"/>
+          <circle cx="40" cy="0" r="2.2" fill="var(--accent)"/>
+          <circle cx="-40" cy="0" r="2.2" fill="var(--accent)"/>
+          <circle cx="0" cy="63" r="2.2" fill="var(--accent)"/>
+          <line x1="58" y1="58" x2="100" y2="100" stroke="var(--accent)" stroke-width="11" stroke-linecap="round"/>
+          <line x1="62" y1="62" x2="97" y2="97" stroke="#05090c" stroke-width="5" stroke-linecap="round"/>
+          <line x1="70" y1="76" x2="74" y2="72" stroke="var(--accent)" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+          <line x1="76" y1="82" x2="80" y2="78" stroke="var(--accent)" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+          <line x1="82" y1="88" x2="86" y2="84" stroke="var(--accent)" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+        </svg>
+        <span class="nav-logo-text">Deep<span class="logo-accent">Trace</span></span>
+      </a>
+
+      <!-- Links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#upload-panel">Detect</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+
+      <!-- Mobile menu button -->
+      <button class="nav-mobile-btn" id="nav-mobile-btn"
+              aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="nav-mobile-menu" id="nav-mobile-menu" hidden>
+      <a href="#upload-panel">Detect</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#about">About</a>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       SECTION 1 — HERO
+       Split layout: LEFT = story, RIGHT = live tool
+  ============================================================ -->
+  <section class="section hero-section" id="hero">
+
+    <!-- Background dot grid -->
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <!-- Corner scan decorations -->
+    <div class="scan-corner scan-corner--tl" aria-hidden="true"></div>
+    <div class="scan-corner scan-corner--tr" aria-hidden="true"></div>
+    <div class="scan-corner scan-corner--bl" aria-hidden="true"></div>
+    <div class="scan-corner scan-corner--br" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+
+      <!-- ── LEFT — Identity + Context ── -->
+      <div class="hero-left">
+
+        <div class="hero-badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          Boundary-Topology Detection System
+        </div>
+
+        <h1 class="hero-title">
+          Deep<span class="title-accent">Trace</span>
+        </h1>
+
+        <p class="hero-tagline">See Through the Fake.</p>
+
+        <p class="hero-desc">
+          Advanced AI &amp; deepfake detection powered by the
+          Boundary-Topology Detector — the forensic algorithm that
+          examines where AI generation always fails.
+        </p>
+
+        <!-- Stats -->
+        <div class="hero-stats" aria-label="Key statistics">
+          <div class="stat-item">
+            <span class="stat-number">9</span>
+            <span class="stat-label">Forensic Signals</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-number">2</span>
+            <span class="stat-label">AI Models</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-number">BTD</span>
+            <span class="stat-label">Temporal Analysis</span>
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator" id="scroll-indicator" aria-hidden="true">
+          <div class="scroll-arrows">
+            <svg class="scroll-arrow scroll-arrow--top" width="22" height="13"
+                 viewBox="0 0 22 13" fill="none">
+              <path d="M1 1L11 11L21 1" stroke="var(--accent)"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="scroll-arrow scroll-arrow--bottom" width="22" height="13"
+                 viewBox="0 0 22 13" fill="none">
+              <path d="M1 1L11 11L21 1" stroke="var(--accent)"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="scroll-label">SCROLL</span>
+        </div>
+
+      </div><!-- end hero-left -->
+
+
+      <!-- ── RIGHT — Live Tool Panel ── -->
+      <div class="hero-right" id="upload-panel">
+
+        <!-- ─ STATE A: IDLE — BTD animation + upload ─ -->
+        <div class="tool-panel" id="state-idle">
+
+          <!-- Live BTD face scan animation -->
+          <div class="btd-idle-animation" aria-hidden="true" id="btd-idle-anim">
+            <svg class="btd-face-svg" viewBox="-90 -100 180 210"
+                 fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Face outline -->
+              <path class="btd-face-outline" d="M0 -52 C10 -52 22 -48 30 -38 C38 -28 40 -14 40 0 C40 14 38 26 32 36 C26 46 16 54 8 58 C4 60 0 61 0 61 C0 61 -4 60 -8 58 C-16 54 -26 46 -32 36 C-38 26 -40 14 -40 0 C-40 -14 -38 -28 -30 -38 C-22 -48 -10 -52 0 -52 Z"/>
+              <!-- Hairline boundary — dashed — BTD signal A -->
+              <path class="btd-hairline" d="M-30 -40 C-22 -68 -10 -76 0 -76 C10 -76 22 -68 30 -40" stroke-dasharray="4 3"/>
+              <!-- Jaw boundary — solid — strongest signal -->
+              <path class="btd-jaw" d="M-20 42 C-10 56 -4 62 0 63 C4 62 10 56 20 42"/>
+              <!-- Ears -->
+              <path class="btd-ear" d="M-40 -6 C-46 -6 -49 0 -49 6 C-49 12 -46 18 -40 18"/>
+              <path class="btd-ear" d="M40 -6 C46 -6 49 0 49 6 C49 12 46 18 40 18"/>
+              <!-- Eyebrows -->
+              <path class="btd-eyebrow" d="M-26 -24 C-20 -29 -12 -30 -6 -27"/>
+              <path class="btd-eyebrow" d="M26 -24 C20 -29 12 -30 6 -27"/>
+              <!-- Eyes -->
+              <path class="btd-eye-lid" d="M-26 -15 C-22 -21 -14 -22 -8 -21 C-4 -20 -2 -17 -2 -15"/>
+              <path class="btd-eye-lid btd-eye-lower" d="M-26 -15 C-22 -11 -14 -10 -8 -10 C-4 -10 -2 -12 -2 -15"/>
+              <circle class="btd-iris" cx="-14" cy="-15" r="4"/>
+              <circle class="btd-pupil" cx="-14" cy="-15" r="1.8"/>
+              <path class="btd-eye-lid" d="M26 -15 C22 -21 14 -22 8 -21 C4 -20 2 -17 2 -15"/>
+              <path class="btd-eye-lid btd-eye-lower" d="M26 -15 C22 -11 14 -10 8 -10 C4 -10 2 -12 2 -15"/>
+              <circle class="btd-iris" cx="14" cy="-15" r="4"/>
+              <circle class="btd-pupil" cx="14" cy="-15" r="1.8"/>
+              <!-- BTD boundary detection points — pulse one by one -->
+              <circle class="btd-dot btd-dot-1" cx="0"   cy="-76" r="3"/>
+              <circle class="btd-dot btd-dot-2" cx="40"  cy="0"   r="3"/>
+              <circle class="btd-dot btd-dot-3" cx="-40" cy="0"   r="3"/>
+              <circle class="btd-dot btd-dot-4" cx="0"   cy="63"  r="3"/>
+              <circle class="btd-dot btd-dot-5" cx="32"  cy="-36" r="2"/>
+              <circle class="btd-dot btd-dot-6" cx="-32" cy="-36" r="2"/>
+              <!-- Scan line — sweeps top to bottom -->
+              <line class="btd-scanline" x1="-60" y1="-90" x2="60" y2="-90"/>
+            </svg>
+            <p class="btd-idle-label">Forensic Scanner Ready</p>
+          </div>
+
+          <!-- Tabs -->
+          <div class="upload-tabs" role="tablist" aria-label="Media type">
+            <button class="tab-btn tab-btn--active" role="tab"
+                    aria-selected="true" aria-controls="tab-image"
+                    id="btn-image" data-tab="image">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/>
+                <circle cx="5.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1"/>
+                <path d="M1 11l4-4 3 3 2-2 5 5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+              </svg>
+              Image
+            </button>
+            <button class="tab-btn" role="tab"
+                    aria-selected="false" aria-controls="tab-video"
+                    id="btn-video" data-tab="video">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M11 6.5l4-2.5v8l-4-2.5V6.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              </svg>
+              Video
+            </button>
+          </div>
+
+          <!-- Image panel -->
+          <div class="upload-tab-panel" id="tab-image"
+               role="tabpanel" aria-labelledby="btn-image">
+            <div class="drop-zone" id="drop-zone-image"
+                 tabindex="0" role="button"
+                 aria-label="Upload image for deepfake analysis">
+              <input type="file" id="file-input-image"
+                     accept=".jpg,.jpeg,.png,.webp" hidden
+                     aria-label="Choose image file"/>
+              <!-- Idle content -->
+              <div class="dz-idle" id="dz-idle-image">
+                <div class="dz-icon" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <path d="M18 8v12M12 14l6-6 6 6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 26h20" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                  </svg>
+                </div>
+                <p class="dz-title">Drop image here</p>
+                <p class="dz-sub">or <span class="dz-link">click to browse</span></p>
+                <p class="dz-formats">JPG · PNG · WEBP · max 10MB</p>
+              </div>
+              <!-- Preview content -->
+              <div class="dz-preview" id="dz-preview-image" hidden>
+                <img id="preview-img" src="" alt=""/>
+                <div class="dz-preview-bar">
+                  <span class="dz-filename" id="dz-filename-image"></span>
+                  <button class="dz-remove" id="remove-image"
+                          aria-label="Remove image">&times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video panel -->
+          <div class="upload-tab-panel" id="tab-video"
+               role="tabpanel" aria-labelledby="btn-video" hidden>
+            <div class="drop-zone" id="drop-zone-video"
+                 tabindex="0" role="button"
+                 aria-label="Upload video for deepfake analysis">
+              <input type="file" id="file-input-video"
+                     accept=".mp4,.avi,.mov,.mkv" hidden
+                     aria-label="Choose video file"/>
+              <div class="dz-idle" id="dz-idle-video">
+                <div class="dz-icon" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <rect x="3" y="9" width="20" height="18" rx="3" stroke="var(--accent)" stroke-width="2"/>
+                    <path d="M23 15l10-6v18l-10-6V15z" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <p class="dz-title">Drop video here</p>
+                <p class="dz-sub">or <span class="dz-link">click to browse</span></p>
+                <p class="dz-formats">MP4 · AVI · MOV · MKV · max 50MB</p>
+              </div>
+              <div class="dz-preview" id="dz-preview-video" hidden>
+                <video id="preview-video" muted playsinline></video>
+                <div class="dz-preview-bar">
+                  <span class="dz-filename" id="dz-filename-video"></span>
+                  <button class="dz-remove" id="remove-video"
+                          aria-label="Remove video">&times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analyse button -->
+          <button class="btn btn-primary btn-analyse"
+                  id="analyse-btn" disabled aria-label="Start analysis">
+            <span class="btn-text">Analyse</span>
+            <span class="btn-loading" hidden>
+              <span class="spinner" aria-hidden="true"></span>
+              Preparing...
+            </span>
+          </button>
+
+        </div><!-- end state-idle -->
+
+
+        <!-- ─ STATE B: SCANNER — analysis running ─ -->
+        <div class="tool-panel" id="state-scanner" hidden>
+
+          <!-- Sound toggle -->
+          <button class="sound-toggle" id="sound-toggle"
+                  aria-label="Toggle analysis sound" aria-pressed="false"
+                  title="Toggle sound">
+            <svg class="sound-icon sound-on" width="18" height="18"
+                 viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M3 6.5H1v5h2l4 4v-13L3 6.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M12 5.5c1.5 1 2.5 2.5 2.5 4s-1 3-2.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M14.5 3c2 1.5 3.5 3.5 3.5 6.5s-1.5 5-3.5 6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            <svg class="sound-icon sound-off" width="18" height="18"
+                 viewBox="0 0 18 18" fill="none" aria-hidden="true" style="display:none">
+              <path d="M3 6.5H1v5h2l4 4v-13L3 6.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <line x1="12" y1="6" x2="18" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="18" y1="6" x2="12" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <!-- Image/video preview dimmed -->
+          <div class="scanner-preview-wrap">
+            <img id="scanner-img" src="" alt="" class="scanner-preview-img"/>
+            <video id="scanner-video" class="scanner-preview-img"
+                   muted style="display:none"></video>
+            <!-- Scan line sweeps over it -->
+            <div class="scanner-line" id="scanner-line" aria-hidden="true"></div>
+            <!-- Loading overlay -->
+            <div class="scanner-overlay" aria-hidden="true">
+              <p class="scanner-status" id="scanner-status">
+                Initialising forensic scan...
+              </p>
+            </div>
+          </div>
+
+          <!-- Progress bars -->
+          <div class="scanner-bars" aria-label="Analysis progress">
+            <div class="scanner-bar-row">
+              <span class="scanner-bar-label">Boundary Analysis</span>
+              <div class="scanner-bar-track">
+                <div class="scanner-bar-fill" id="bar-boundary"></div>
+              </div>
+              <span class="scanner-bar-pct" id="pct-boundary">0%</span>
+            </div>
+            <div class="scanner-bar-row">
+              <span class="scanner-bar-label">Model Inference</span>
+              <div class="scanner-bar-track">
+                <div class="scanner-bar-fill" id="bar-model"></div>
+              </div>
+              <span class="scanner-bar-pct" id="pct-model">0%</span>
+            </div>
+            <div class="scanner-bar-row">
+              <span class="scanner-bar-label">Signal Processing</span>
+              <div class="scanner-bar-track">
+                <div class="scanner-bar-fill" id="bar-signal"></div>
+              </div>
+              <span class="scanner-bar-pct" id="pct-signal">0%</span>
+            </div>
+          </div>
+
+          <!-- Confidence slot machine -->
+          <div class="scanner-confidence" aria-live="polite">
+            <span class="scanner-conf-label">CONFIDENCE</span>
+            <span class="scanner-conf-number" id="conf-number">—</span>
+          </div>
+
+          <!-- Video frame counter (hidden for images) -->
+          <div class="scanner-frame-counter" id="frame-counter" hidden
+               aria-live="polite">
+            <span id="frame-current">0</span>
+            <span class="frame-sep"> / </span>
+            <span id="frame-total">30</span>
+            <span class="frame-label"> frames analysed</span>
+          </div>
+
+        </div><!-- end state-scanner -->
+
+
+        <!-- ─ STATE C: RESULT — analysis complete ─ -->
+        <div class="tool-panel" id="state-result" hidden>
+
+          <!-- Vignette overlay for FAKE -->
+          <div class="result-vignette" id="result-vignette" aria-hidden="true"></div>
+
+          <!-- Report header -->
+          <div class="result-header">
+            <span class="result-report-label">FORENSIC REPORT</span>
+            <span class="result-filename" id="result-filename"></span>
+          </div>
+
+          <!-- Verdict -->
+          <div class="result-verdict" id="result-verdict" aria-live="assertive">
+            <div class="verdict-icon" id="verdict-icon" aria-hidden="true"></div>
+            <div class="verdict-main">
+              <span class="verdict-word" id="verdict-word">—</span>
+              <span class="verdict-pct"  id="verdict-pct">—</span>
+            </div>
+            <div class="verdict-bar-wrap">
+              <div class="verdict-bar-fill" id="verdict-bar-fill"></div>
+            </div>
+          </div>
+
+          <!-- Heatmap panels -->
+          <div class="result-heatmap-row">
+            <div class="heatmap-card">
+              <div class="heatmap-card-label">Original</div>
+              <img id="result-original" src="" alt="Original uploaded file"/>
+            </div>
+            <div class="heatmap-card heatmap-card--analysis"
+                 id="heatmap-card-analysis">
+              <div class="heatmap-card-label">
+                Grad-CAM Analysis
+                <span class="heatmap-tooltip-trigger" tabindex="0"
+                      aria-label="Heatmap explanation">?
+                  <span class="heatmap-tooltip" role="tooltip">
+                    Red = high suspicion · Blue = normal
+                  </span>
+                </span>
+              </div>
+              <img id="result-heatmap" src="" alt="Grad-CAM heatmap"/>
+            </div>
+          </div>
+
+          <!-- Plain English verdict -->
+          <p class="result-plain" id="result-plain"></p>
+
+          <!-- Expert expand -->
+          <button class="expert-toggle" id="expert-toggle"
+                  aria-expanded="false">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            View Detailed Forensic Signals
+          </button>
+          <div class="expert-panel" id="expert-panel" hidden>
+            <div class="signal-cards" id="signal-cards">
+              <!-- Filled by result.js -->
+            </div>
+            <ul class="btd-flags" id="btd-flags">
+              <!-- Filled by result.js -->
+            </ul>
+            <p class="processing-time" id="processing-time"></p>
+          </div>
+
+          <!-- CTA -->
+          <button class="btn btn-ghost btn-analyse-another"
+                  id="analyse-another-btn">
+            Analyse Another File
+          </button>
+
+        </div><!-- end state-result -->
+
+      </div><!-- end hero-right -->
+
+    </div><!-- end hero-inner -->
+
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 2 — TRUST BAR
+       Thin elegant strip showing key capabilities
+  ============================================================ -->
+  <div class="trust-bar" role="complementary" aria-label="Key capabilities">
+    <div class="trust-bar-inner">
+      <span class="trust-item">
+        <span class="trust-icon" aria-hidden="true">🔬</span>
+        9 BTD Forensic Signals
+      </span>
+      <span class="trust-dot" aria-hidden="true">·</span>
+      <span class="trust-item">
+        <span class="trust-icon" aria-hidden="true">🧠</span>
+        EfficientNet-B4 + ViT
+      </span>
+      <span class="trust-dot" aria-hidden="true">·</span>
+      <span class="trust-item">
+        <span class="trust-icon" aria-hidden="true">⏱</span>
+        Temporal Video Analysis
+      </span>
+      <span class="trust-dot" aria-hidden="true">·</span>
+      <span class="trust-item">
+        <span class="trust-icon" aria-hidden="true">🎓</span>
+        IEM Kolkata Research 2025
+      </span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 3 — HOW IT WORKS
+       3 step cards showing the detection pipeline
+  ============================================================ -->
+  <section class="section how-section" id="how-it-works">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-tag">Methodology</span>
+        <h2 class="section-title">How DeepTrace Works</h2>
+        <p class="section-subtitle">
+          Three stages of forensic analysis powered by boundary-topology science
+        </p>
+      </div>
+
+      <div class="how-steps">
+
+        <div class="how-step">
+          <div class="how-step-num">01</div>
+          <div class="how-step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M6 24V10L14 2l8 8v14H6z" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M10 24v-8h8v8" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="how-step-title">Upload &amp; Extract</h3>
+          <p class="how-step-desc">
+            MediaPipe detects the face and extracts 468 landmarks,
+            isolating the boundary at hairline, jaw and ears —
+            the exact regions where AI always fails.
+          </p>
+        </div>
+
+        <div class="how-step-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M11 5l5 5-5 5"
+                  stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="how-step">
+          <div class="how-step-num">02</div>
+          <div class="how-step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="11" stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M8 14c0-3.3 2.7-6 6-6s6 2.7 6 6"
+                    stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="14" cy="14" r="2.5" fill="var(--accent)"/>
+            </svg>
+          </div>
+          <h3 class="how-step-title">BTD Analysis</h3>
+          <p class="how-step-desc">
+            9 forensic signals examine boundary curvature, chromatic
+            aberration, sensor noise and facial symmetry. Temporal BTD
+            tracks boundary evolution across video frames.
+          </p>
+        </div>
+
+        <div class="how-step-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M11 5l5 5-5 5"
+                  stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="how-step">
+          <div class="how-step-num">03</div>
+          <div class="how-step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect x="3" y="3" width="22" height="22" rx="4"
+                    stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M8 14l4 4 8-8" stroke="var(--accent)"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="how-step-title">Result &amp; Heatmap</h3>
+          <p class="how-step-desc">
+            EfficientNet-B4 and ViT scores combine with BTD forensics
+            in a calibrated ensemble. Grad-CAM heatmap highlights
+            the exact region that drove the decision.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- BTD callout -->
+      <div class="btd-callout">
+        <div class="btd-callout-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 2L2 7l9 4.5L20 7 11 2zM2 15l9 5 9-5M2 11l9 5 9-5"
+                  stroke="var(--accent)" stroke-width="1.4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="btd-callout-text">
+          <strong>Boundary-Topology Detector (BTD)</strong> —
+          AI generation and face-swapping always struggle at topological
+          boundaries: the hairline, ears and jaw. DeepTrace analyses
+          these exact regions where the mathematics of generation breaks
+          down, leaving forensic evidence that no post-processing can hide.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 4 — VISUAL PIPELINE EXPLAINER
+       Animated diagram + 3 highlight cards
+  ============================================================ -->
+  <section class="section pipeline-section" id="pipeline">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-tag">Under The Hood</span>
+        <h2 class="section-title">The Detection Pipeline</h2>
+        <p class="section-subtitle">
+          From upload to verdict — every step of the forensic process
+        </p>
+      </div>
+
+      <!-- Animated pipeline diagram -->
+      <div class="pipeline-diagram" aria-label="Detection pipeline flow">
+        <div class="pipeline-step" data-step="1">
+          <div class="pipeline-node">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
+                    stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="pipeline-label">Upload</span>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true"></div>
+        <div class="pipeline-step" data-step="2">
+          <div class="pipeline-node">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"
+                    stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="pipeline-label">Face Detect</span>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true"></div>
+        <div class="pipeline-step" data-step="3">
+          <div class="pipeline-node">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2C6 2 2 7 2 12s4 10 10 10 10-4 10-10"
+                    stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="3" stroke="var(--accent)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="pipeline-label">BTD Signals</span>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true"></div>
+        <div class="pipeline-step" data-step="4">
+          <div class="pipeline-node">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="18" rx="3"
+                    stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M8 12l2 2 4-4" stroke="var(--accent)"
+                    stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="pipeline-label">AI Models</span>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true"></div>
+        <div class="pipeline-step" data-step="5">
+          <div class="pipeline-node">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"
+                    stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="pipeline-label">Ensemble</span>
+        </div>
+        <div class="pipeline-arrow" aria-hidden="true"></div>
+        <div class="pipeline-step pipeline-step--result" data-step="6">
+          <div class="pipeline-node pipeline-node--result">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="pipeline-label">Verdict</span>
+        </div>
+      </div>
+
+      <!-- 3 highlight cards -->
+      <div class="pipeline-cards">
+
+        <div class="pipeline-card">
+          <div class="pipeline-card-anim" aria-hidden="true">
+            <!-- Mini animated BTD face -->
+            <svg viewBox="-50 -60 100 130" fill="none" width="80" height="80">
+              <path class="mini-face" d="M0 -30 C8 -30 16 -24 18 -14 C20 -4 18 6 14 16 C10 24 6 28 0 30 C-6 28 -10 24 -14 16 C-18 6 -20 -4 -18 -14 C-16 -24 -8 -30 0 -30Z" stroke="var(--accent)" stroke-width="1" fill="none" opacity="0.7"/>
+              <path class="mini-hairline" d="M-14 -22 C-10 -40 -4 -44 0 -44 C4 -44 10 -40 14 -22" stroke="var(--accent)" stroke-width="0.8" stroke-dasharray="3 2" fill="none" opacity="0.6"/>
+              <path class="mini-jaw" d="M-10 22 C-4 32 4 32 10 22" stroke="var(--accent)" stroke-width="1.5" fill="none"/>
+              <circle class="mini-dot" cx="0" cy="-44" r="2" fill="var(--accent)"/>
+              <circle class="mini-dot" cx="18" cy="-14" r="2" fill="var(--accent)"/>
+              <circle class="mini-dot" cx="-18" cy="-14" r="2" fill="var(--accent)"/>
+              <circle class="mini-dot" cx="0" cy="30" r="2" fill="var(--accent)"/>
+            </svg>
+          </div>
+          <h3 class="pipeline-card-title">BTD Algorithm</h3>
+          <p class="pipeline-card-desc">
+            9 forensic signals examine boundary curvature, noise,
+            chromatic aberration and facial symmetry deviation.
+          </p>
+        </div>
+
+        <div class="pipeline-card">
+          <div class="pipeline-card-anim" aria-hidden="true">
+            <!-- Mini heatmap split animation -->
+            <div class="mini-heatmap-wrap">
+              <div class="mini-heatmap-left">
+                <svg viewBox="0 0 40 50" width="40" height="50">
+                  <rect width="40" height="50" fill="#1a1a2e" rx="4"/>
+                  <ellipse cx="20" cy="22" rx="12" ry="16" fill="none" stroke="#444" stroke-width="1"/>
+                  <circle cx="15" cy="18" r="3" fill="#555"/>
+                  <circle cx="25" cy="18" r="3" fill="#555"/>
+                </svg>
+              </div>
+              <div class="mini-heatmap-right">
+                <svg viewBox="0 0 40 50" width="40" height="50">
+                  <rect width="40" height="50" fill="#1a1a2e" rx="4"/>
+                  <ellipse cx="20" cy="22" rx="12" ry="16" fill="rgba(255,68,68,0.2)" stroke="rgba(255,68,68,0.5)" stroke-width="1"/>
+                  <ellipse cx="20" cy="16" rx="8" ry="5" fill="rgba(255,68,68,0.35)"/>
+                  <ellipse cx="20" cy="14" rx="4" ry="3" fill="rgba(255,100,50,0.5)"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <h3 class="pipeline-card-title">Grad-CAM Heatmap</h3>
+          <p class="pipeline-card-desc">
+            Visual proof of where the fake signal lives —
+            at pixel level, overlaid on your original image.
+          </p>
+        </div>
+
+        <div class="pipeline-card">
+          <div class="pipeline-card-anim" aria-hidden="true">
+            <!-- Mini frame score chart -->
+            <svg viewBox="0 0 100 60" width="100" height="60">
+              <line x1="8" y1="55" x2="95" y2="55" stroke="#333" stroke-width="0.8"/>
+              <line x1="8" y1="5"  x2="8"  y2="55" stroke="#333" stroke-width="0.8"/>
+              <polyline class="mini-chart-line"
+                points="8,45 18,42 28,38 38,20 48,18 58,22 68,40 78,42 88,44 95,43"
+                fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Red danger zone -->
+              <rect x="30" y="5" width="30" height="20" fill="rgba(255,68,68,0.08)" rx="2"/>
+              <line x1="30" y1="25" x2="60" y2="25" stroke="rgba(255,68,68,0.3)" stroke-width="0.8" stroke-dasharray="2 2"/>
+            </svg>
+          </div>
+          <h3 class="pipeline-card-title">Temporal BTD</h3>
+          <p class="pipeline-card-desc">
+            Tracks boundary evolution across video frames —
+            detecting AI loops and swap artifacts frame by frame.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 5 — ABOUT
+  ============================================================ -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-left">
+          <span class="section-tag">The Project</span>
+          <h2 class="section-title">About DeepTrace</h2>
+          <p class="about-desc">
+            DeepTrace is a final year BTech project that pushes the
+            state of deepfake detection through forensic signal analysis
+            and boundary topology tracking. Built with the conviction
+            that every AI-generated image leaves evidence — you just
+            need to know where to look.
+          </p>
+          <p class="about-desc">
+            The Boundary-Topology Detector (BTD) algorithm forms the
+            academic core of this work — examining the mathematical
+            fingerprints that AI generation leaves at facial boundaries,
+            especially under motion.
+          </p>
+        </div>
+
+        <div class="about-right">
+          <div class="developer-card">
+            <div class="dev-photo-wrap">
+              <img src="assets/swapnil.jpg"
+                   alt="Swapnil Chakraborty"
+                   class="dev-photo"
+                   onerror="this.style.display='none';document.getElementById('dev-avatar-fallback').style.display='flex'"/>
+              <div class="dev-avatar" id="dev-avatar-fallback" style="display:none" aria-hidden="true">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                  <circle cx="22" cy="22" r="20" stroke="var(--accent)" stroke-width="1.3"/>
+                  <circle cx="22" cy="18" r="7" stroke="var(--accent)" stroke-width="1.3"/>
+                  <path d="M6 38c0-8.8 7.2-16 16-16s16 7.2 16 16"
+                        stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="dev-info">
+              <h3 class="dev-name">Swapnil Chakraborty</h3>
+              <p class="dev-role">Computer Science &amp; Engineering</p>
+              <p class="dev-college">
+                Institute of Engineering &amp; Management, Kolkata
+              </p>
+              <p class="dev-college">Final Year — 2025</p>
+            </div>
+            <div class="dev-links">
+              <a href="https://github.com/Swapnil-2004"
+                 target="_blank" rel="noopener noreferrer"
+                 class="btn btn-ghost btn-sm">
+                <svg width="14" height="14" viewBox="0 0 16 16"
+                     fill="currentColor" aria-hidden="true">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-logo">
+            Deep<span class="logo-accent">Trace</span>
+          </span>
+          <span class="footer-copy">
+            &copy; 2025 Swapnil Chakraborty &mdash; IEM Kolkata CSE
+          </span>
+        </div>
+        <div class="footer-right">
+          <span class="footer-note">Final Year BTech Project</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       JAVASCRIPT — loaded at bottom after all HTML is ready
+  ============================================================ -->
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/upload.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/reveal.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/result.js"></script>
+
+</body>
+</html>
